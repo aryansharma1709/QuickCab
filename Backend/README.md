@@ -84,3 +84,64 @@ The following fields are required in the request body:
     }
 }
 ```
+
+# User Profile Endpoint Documentation
+
+## Endpoint
+`GET /users/profile`
+
+## Description
+This endpoint is used to retrieve the profile of the authenticated user.
+
+## Required Headers
+- `Authorization`: Bearer token of the authenticated user
+
+## Status Codes
+- `200 OK`: Successfully retrieved user profile
+- `401 Unauthorized`: Invalid or missing authentication token
+
+## Example Request
+```
+GET /users/profile
+Authorization: Bearer <token>
+```
+
+## Example Response
+```json
+{
+    "_id": "60d0fe4f5311236168a109ca",
+    "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+    },
+    "email": "john.doe@example.com"
+}
+```
+
+# User Logout Endpoint Documentation
+
+## Endpoint
+`GET /users/logout`
+
+## Description
+This endpoint is used to log out the authenticated user by clearing the authentication token.
+
+## Required Headers
+- `Authorization`: Bearer token of the authenticated user
+
+## Status Codes
+- `200 OK`: Successfully logged out
+- `401 Unauthorized`: Invalid or missing authentication token
+
+## Example Request
+```
+GET /users/logout
+Authorization: Bearer <token>
+```
+
+## Example Response
+```json
+{
+    "message": "logged out"
+}
+```

@@ -1,5 +1,6 @@
 const express=require('express');
 const router =express.Router();
+const authMiddleware =require('../middlewares/auth.middleware')
 // express validator  package ka use karne  data ko validate karne ke liye
 
 const{body }=require('express-validator')
@@ -18,4 +19,6 @@ const userController=require('../controllers/user.controllers')
    body('password').isLength({min:6}).withMessage('password must be 6 character')
  ],userController.loginUser)
 
+ router.get('/profile',authMiddleware.authUser,userController.getUserProfile);
+ router.get('/logout',authMiddleware.authUser,userController.logoutUser);
 module.exports=router;

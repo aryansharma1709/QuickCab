@@ -1,7 +1,7 @@
 const userModel=require('../models/user.model');
 const userService=require('../services/user.services');
 const {validationResult} =require('express-validator')
-
+const blacklistTokenModel=require('../models/blacklistToken.model')
 // register controller hai  ye
 module.exports.registerUser=async(req,res,next)=>{
         const  errors=validationResult(req);
@@ -41,5 +41,27 @@ module.exports.loginUser=async(req,res,next)=>{
         return  res.status(401).json({message:'Invalid email or password'});
      }
      const token=user.generateAuthToken();
+   //   ye cookie ki help se login kar rhe hai 
+     res.cookie('token',token
+   //    {
+   //    httpOnly:true,
+   //    secure:process.env.NODE_ENV==='Production',
+   //    maxAge:360000
+   //   }
+   )
      res.status(200).json({token,user});
+}
+
+// profile page  ka controller user ka
+module.exports.getUserProfile=async(req,res,next)=>{
+   res.status(200).json(req.user);
+}
+
+// logout user 
+module.exports.logoutUser=async(req, res, next)=>{
+   res.clearCookie('token');
+   const token=req.cookies.token || req.headers.authorization?.split(' ')[1];
+   // ye karne se bhi if token local storge me save akr liya ya share kar liye then to hum middle ka use karenge
+   await blacklistTokenModel.create({token});
+   res.status(200).json({message:"logged out"});
 }

@@ -13,4 +13,9 @@ const userController=require('../controllers/user.controllers')
 
  ],userController.registerUser)
 
+ router.post('/login',[
+   body('email').isEmail().withMessage('Invalid Email'),
+   body('password').isLength({min:6}).withMessage('password must be 6 character')
+ ],userController.loginUser)
+
 module.exports=router;

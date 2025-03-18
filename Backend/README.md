@@ -43,3 +43,44 @@ The following fields are required in the request body:
     }
 }
 ```
+
+# User Login Endpoint Documentation
+
+## Endpoint
+`POST /users/login`
+
+## Description
+This endpoint is used to log in an existing user. It validates the input data, checks the user's credentials, and returns an authentication token along with the user details.
+
+## Required Data
+The following fields are required in the request body:
+- `email`: Email address of the user (must be a valid email)
+- `password`: Password for the user account (minimum 6 characters)
+
+## Status Codes
+- `200 OK`: User successfully logged in
+- `400 Bad Request`: Validation error or missing required fields
+- `401 Unauthorized`: Invalid email or password
+
+## Example Request
+```json
+{
+    "email": "john.doe@example.com",
+    "password": "password123"
+}
+```
+
+## Example Response
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "user": {
+        "_id": "60d0fe4f5311236168a109ca",
+        "fullname": {
+            "firstname": "John",
+            "lastname": "Doe"
+        },
+        "email": "john.doe@example.com"
+    }
+}
+```

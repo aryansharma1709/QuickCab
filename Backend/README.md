@@ -44,6 +44,68 @@ The following fields are required in the request body:
 }
 ```
 
+# Captain Registration Endpoint Documentation
+
+## Endpoint
+`POST /captain/register`
+
+## Description
+This endpoint is used to register a new captain. It validates the input data, hashes the password, creates a new captain, and returns an authentication token along with the captain details.
+
+## Required Data
+The following fields are required in the request body:
+- `fullname.firstname`: First name of the captain (minimum 3 characters)
+- `fullname.lastname`: Last name of the captain (optional, minimum 3 characters if provided)
+- `email`: Email address of the captain (must be a valid email)
+- `password`: Password for the captain account (minimum 6 characters)
+- `vehicle.color`: Color of the vehicle (minimum 3 characters)
+- `vehicle.plate`: Plate number of the vehicle (minimum 3 characters)
+- `vehicle.capacity`: Capacity of the vehicle (minimum 1 sitting)
+- `vehicle.vehicleType`: Type of the vehicle (must be one of 'car', 'motorcycle', 'auto')
+
+## Status Codes
+- `201 Created`: Captain successfully registered
+- `400 Bad Request`: Validation error or missing required fields
+
+## Example Request
+```json
+{
+    "fullname": {
+        "firstname": "Jane",
+        "lastname": "Doe"
+    },
+    "email": "jane.doe@example.com",
+    "password": "password123",
+    "vehicle": {
+        "color": "Red",
+        "plate": "XYZ123",
+        "capacity": 4,
+        "vehicleType": "car"
+    }
+}
+```
+
+## Example Response
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "captain": {
+        "_id": "60d0fe4f5311236168a109cb",
+        "fullname": {
+            "firstname": "Jane",
+            "lastname": "Doe"
+        },
+        "email": "jane.doe@example.com",
+        "vehicle": {
+            "color": "Red",
+            "plate": "XYZ123",
+            "capacity": 4,
+            "vehicleType": "car"
+        }
+    }
+}
+```
+
 # User Login Endpoint Documentation
 
 ## Endpoint
